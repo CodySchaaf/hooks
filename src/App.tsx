@@ -1,40 +1,24 @@
-import { useCallback, useState } from "react";
-import { MyExpensiveComponent } from "./MyExpensiveComponent.tsx";
+import { ThemeProvider } from "./ThemeProvider.tsx";
+import { ShowTheme } from "./ShowTheme.tsx";
+import { ShowAndUpdateTheme } from "./ShowAndUpdateTheme.tsx";
+import { PropsWithChildren } from "react";
+
+function Wrapper({ children }: PropsWithChildren) {
+  console.log("Wrapper Rendered");
+  return children;
+}
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [count2, setCount2] = useState(0);
-
-  const callback = () => {
-    console.log("veryBadUseCallback", count);
-  };
-
-  const badUseCallback = useCallback(() => {
-    console.log("veryBadUseCallback", count);
-  });
-
-  const veryBadUseCallback = useCallback(() => {
-    console.log("veryBadUseCallback", count);
-  }, []);
-
-  const goodUseCallback = useCallback(() => {
-    console.log("veryBadUseCallback", count);
-  }, [count]);
-
+  console.log("App render");
   return (
-    <>
-      Count1: {count}
-      <br />
-      <button onClick={() => setCount(count + 1)}>Increment Count</button>
-      <br />
-      Count2: {count2}
-      <br />
-      <button onClick={() => setCount2(count2 + 1)}>Increment Count</button>
-      <MyExpensiveComponent onClick={callback} />
-      <MyExpensiveComponent onClick={badUseCallback} />
-      <MyExpensiveComponent onClick={veryBadUseCallback} />
-      <MyExpensiveComponent onClick={goodUseCallback} />
-    </>
+    <ThemeProvider>
+      <Wrapper>
+        Component 1:
+        <ShowTheme />
+        Component 2:
+        <ShowAndUpdateTheme />
+      </Wrapper>
+    </ThemeProvider>
   );
 }
 
